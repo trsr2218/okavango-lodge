@@ -218,6 +218,7 @@
     <button class="cur" data-cur="ZAR" aria-pressed="false">ZAR</button>
     <button class="cur" data-cur="EUR" aria-pressed="false">EUR</button>
     <button class="cur" data-cur="GBP" aria-pressed="false">GBP</button>
+    <button class="cur" data-cur="BWP" aria-pressed="false">BWP</button>
   </div>
 
   <!-- HOME -->
@@ -438,7 +439,8 @@
     ZMW: { rate: 27,   symbol: "K",      step: 5 },
     ZAR: { rate: 18,   symbol: "R",      step: 5 },
     EUR: { rate: 0.92, symbol: "€", step: 1 },
-    GBP: { rate: 0.79, symbol: "£", step: 1 }
+    GBP: { rate: 0.79, symbol: "£", step: 1 },
+    BWP: { rate: 13.5, symbol: "P", step: 5 }
   };
   var currency = "USD";
   try { currency = localStorage.getItem("okv-currency") || "USD"; } catch (e) {}
