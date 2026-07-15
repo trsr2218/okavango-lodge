@@ -32,6 +32,16 @@
     letter-spacing:.06em; padding:6px 12px; text-align:center;}
   .ribbon b{color:#F0B67F; font-weight:700;}
 
+  .currency{display:flex; align-items:center; gap:6px; background:var(--river-deep);
+    padding:10px 16px;}
+  .currency .lab{flex:1; font-size:.64rem; text-transform:uppercase; letter-spacing:.12em;
+    color:#7E9A99; font-weight:700;}
+  .cur{border:1px solid rgba(240,182,127,.35); background:transparent; color:#D8CDB4;
+    font-family:inherit; font-size:.72rem; font-weight:700; padding:6px 11px;
+    border-radius:20px; cursor:pointer;}
+  .cur.active{background:#F0B67F; border-color:#F0B67F; color:#231409;}
+  .cur:focus-visible{outline:3px solid #F0B67F; outline-offset:2px;}
+
   .install{display:flex; align-items:center; gap:12px; background:var(--river);
     color:#F2EDE0; padding:12px 16px; font-size:.85rem;}
   .install[hidden]{display:none;}
@@ -201,6 +211,14 @@
     <button class="btn" id="install-btn">Install</button>
   </div>
 
+  <div class="currency" role="group" aria-label="Choose currency">
+    <span class="lab">Prices in</span>
+    <button class="cur active" data-cur="USD" aria-pressed="true">USD</button>
+    <button class="cur" data-cur="ZMW" aria-pressed="false">ZMW</button>
+    <button class="cur" data-cur="ZAR" aria-pressed="false">ZAR</button>
+    <button class="cur" data-cur="EUR" aria-pressed="false">EUR</button>
+  </div>
+
   <!-- HOME -->
   <section class="screen active" id="screen-home">
     <div class="hero">
@@ -218,15 +236,15 @@
       <div class="compare">
         <div class="price-card">
           <div class="who">On booking sites</div>
-          <div class="amount">$40</div>
+          <div class="amount" data-usd="40">$40</div>
           <div class="per">per night, double</div>
         </div>
         <div class="price-card direct">
           <div class="who">Direct with us</div>
-          <div class="amount">$35</div>
+          <div class="amount" data-usd="35">$35</div>
           <div class="per">per night, double</div>
         </div>
-        <div class="save-line">A 4 night stay puts $20 back in your pocket.</div>
+        <div class="save-line" data-usd="20" data-prefix="A 4 night stay puts " data-suffix=" back in your pocket.">A 4 night stay puts $20 back in your pocket.</div>
       </div>
 
       <p class="eyebrow">The essentials</p>
@@ -253,7 +271,7 @@
         <div class="room" data-photo="1">
           <div class="photo"><span>Your photo here</span></div>
           <div class="body">
-            <div class="head"><h3>Standard Double</h3><span class="rate">$35 / night</span></div>
+            <div class="head"><h3>Standard Double</h3><span class="rate" data-usd="35" data-suffix=" / night">$35 / night</span></div>
             <p>Double bed, en suite bathroom, air conditioning, TV and fridge. Breakfast included.</p>
             <button class="btn quiet full" data-goto="book" data-room="double">Book this room</button>
           </div>
@@ -261,7 +279,7 @@
         <div class="room" data-photo="2">
           <div class="photo"><span>Your photo here</span></div>
           <div class="body">
-            <div class="head"><h3>Twin Room</h3><span class="rate">$40 / night</span></div>
+            <div class="head"><h3>Twin Room</h3><span class="rate" data-usd="40" data-suffix=" / night">$40 / night</span></div>
             <p>Two beds, en suite, air conditioning, TV and fridge. Ideal for friends and colleagues.</p>
             <button class="btn quiet full" data-goto="book" data-room="twin">Book this room</button>
           </div>
@@ -269,7 +287,7 @@
         <div class="room" data-photo="3">
           <div class="photo"><span>Your photo here</span></div>
           <div class="body">
-            <div class="head"><h3>Executive Room</h3><span class="rate">$55 / night</span></div>
+            <div class="head"><h3>Executive Room</h3><span class="rate" data-usd="55" data-suffix=" / night">$55 / night</span></div>
             <p>Separate living room plus kitchenette. Room to spread out and stay longer.</p>
             <button class="btn quiet full" data-goto="book" data-room="executive">Book this room</button>
           </div>
@@ -288,17 +306,17 @@
     <div class="pad">
       <div class="acts">
         <div class="act">
-          <div class="head"><h3>Victoria Falls guided walk</h3><span class="from">from $20</span></div>
+          <div class="head"><h3>Victoria Falls guided walk</h3><span class="from" data-usd="20" data-prefix="from ">from $20</span></div>
           <p>Entry to Mosi-oa-Tunya, the smoke that thunders, with a local guide who knows every viewpoint.</p>
           <a href="https://wa.me/260966610063?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20Victoria%20Falls%20guided%20walk.">Ask on WhatsApp &rsaquo;</a>
         </div>
         <div class="act">
-          <div class="head"><h3>Zambezi sunset cruise</h3><span class="from">from $55</span></div>
+          <div class="head"><h3>Zambezi sunset cruise</h3><span class="from" data-usd="55" data-prefix="from ">from $55</span></div>
           <p>Two hours on the river with drinks and snacks as hippos surface and the sky turns amber.</p>
           <a href="https://wa.me/260966610063?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20Zambezi%20sunset%20cruise.">Ask on WhatsApp &rsaquo;</a>
         </div>
         <div class="act">
-          <div class="head"><h3>Microlight flight over the Falls</h3><span class="from">from $190</span></div>
+          <div class="head"><h3>Microlight flight over the Falls</h3><span class="from" data-usd="190" data-prefix="from ">from $190</span></div>
           <p>Fifteen minutes above the gorge. The photo everyone asks about when you get home.</p>
           <a href="https://wa.me/260966610063?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20microlight%20flight.">Ask on WhatsApp &rsaquo;</a>
         </div>
@@ -308,7 +326,7 @@
           <a href="https://wa.me/260966610063?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20Devil%27s%20Pool.">Ask on WhatsApp &rsaquo;</a>
         </div>
         <div class="act">
-          <div class="head"><h3>Rhino walk, Mosi-oa-Tunya park</h3><span class="from">from $80</span></div>
+          <div class="head"><h3>Rhino walk, Mosi-oa-Tunya park</h3><span class="from" data-usd="80" data-prefix="from ">from $80</span></div>
           <p>Track white rhino on foot with armed rangers in the national park next door.</p>
           <a href="https://wa.me/260966610063?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20rhino%20walk.">Ask on WhatsApp &rsaquo;</a>
         </div>
@@ -413,6 +431,23 @@
   };
   var state = { nights: 2, guests: 2 };
 
+  /* Demo exchange rates against USD; confirm with the lodge before go-live. */
+  var CURRENCIES = {
+    USD: { rate: 1,    symbol: "$",      step: 1 },
+    ZMW: { rate: 27,   symbol: "K",      step: 5 },
+    ZAR: { rate: 18,   symbol: "R",      step: 5 },
+    EUR: { rate: 0.92, symbol: "€", step: 1 }
+  };
+  var currency = "USD";
+  try { currency = localStorage.getItem("okv-currency") || "USD"; } catch (e) {}
+  if (!CURRENCIES[currency]) { currency = "USD"; }
+
+  function fmt(usd){
+    var c = CURRENCIES[currency];
+    var v = Math.round(usd * c.rate / c.step) * c.step;
+    return c.symbol + v;
+  }
+
   var tabs = document.querySelectorAll(".tab");
   var screens = document.querySelectorAll(".screen");
 
@@ -461,21 +496,47 @@
     document.getElementById("v-guests").textContent = g;
     document.getElementById("q-line").textContent =
       room.name + ", " + n + (n === 1 ? " night" : " nights");
-    document.getElementById("q-nightly").textContent = "$" + room.rate + " x " + n;
-    document.getElementById("q-total").textContent = "$" + total;
+    document.getElementById("q-nightly").textContent = fmt(room.rate) + " x " + n;
+    document.getElementById("q-total").textContent = fmt(total);
     document.getElementById("q-save").textContent =
-      "That is $" + saving + " less than booking sites charge for the same stay.";
+      "That is " + fmt(saving) + " less than booking sites charge for the same stay.";
 
     var date = document.getElementById("f-date").value || "__";
     var name = document.getElementById("f-name").value.trim();
     var msg = "Hello Okavango Lodge, I would like to book the " + room.name +
-      ". Check in: " + date + ". Nights: " + n + ". Guests: " + g + "." +
+      ". Check in: " + date + ". Nights: " + n + ". Guests: " + g +
+      ". Estimated total: " + fmt(total) + " (" + currency + ")." +
       (name ? " Name: " + name + "." : "");
     document.getElementById("send-btn").href =
       "https://wa.me/260966610063?text=" + encodeURIComponent(msg);
   }
 
-  update();
+  function renderPrices(){
+    document.querySelectorAll("[data-usd]").forEach(function(el){
+      el.textContent = (el.dataset.prefix || "") +
+        fmt(Number(el.dataset.usd)) + (el.dataset.suffix || "");
+    });
+    var sel = document.getElementById("f-room");
+    Array.prototype.forEach.call(sel.options, function(o){
+      o.textContent = ROOMS[o.value].name + ", " + fmt(ROOMS[o.value].rate) + " per night";
+    });
+    document.querySelectorAll(".cur").forEach(function(b){
+      var on = b.dataset.cur === currency;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    update();
+  }
+
+  document.querySelectorAll(".cur").forEach(function(b){
+    b.addEventListener("click", function(){
+      currency = b.dataset.cur;
+      try { localStorage.setItem("okv-currency", currency); } catch (e) {}
+      renderPrices();
+    });
+  });
+
+  renderPrices();
 
   /* PWA: install button + service worker */
   var strip = document.getElementById("install-strip");

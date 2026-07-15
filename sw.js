@@ -1,4 +1,4 @@
-var CACHE = "okavango-v1";
+var CACHE = "okavango-v2";
 var ASSETS = [
   "./",
   "./index.html",
