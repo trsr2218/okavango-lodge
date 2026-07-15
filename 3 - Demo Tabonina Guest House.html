@@ -1,0 +1,152 @@
+<title>Demo by Diyama: Tabonina Guest House</title>
+<style>
+  :root{
+    --leaf:#2E5E34; --leaf-deep:#1F4224; --cream:#FBFAF4; --card:#FFFFFF;
+    --marigold:#E0A526; --marigold-deep:#B98413; --bark:#3B322A; --muted:#6E6A5E; --line:#E7E2D2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--bark);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;}
+  .demo-ribbon{background:var(--bark);color:#F2EDDE;font-size:.72rem;letter-spacing:.06em;
+    padding:8px 14px;text-align:center;}
+  .demo-ribbon b{color:var(--marigold);}
+
+  .hero{background:
+      radial-gradient(120% 90% at 85% 0%, rgba(224,165,38,.35), transparent 55%),
+      linear-gradient(165deg, var(--leaf-deep), var(--leaf) 70%, #47774B);
+    color:#F5F2E4;padding:64px 24px 54px;}
+  .hero .inner{max-width:680px;margin:0 auto;}
+  .hero .place{text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:#D9C98C;margin-bottom:14px;}
+  .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;
+    font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;margin:0 0 14px;text-wrap:balance;}
+  .hero p{max-width:32em;color:#DFE3C9;margin:0;font-size:1.02rem;}
+
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px 70px;}
+
+  /* the differentiator: a booking desk that never closes */
+  .desk{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 22px;margin-top:-34px;position:relative;box-shadow:0 12px 30px rgba(43,58,38,.12);}
+  .desk .eyebrow{margin-top:0;}
+  .desk h2{margin-bottom:4px;}
+  .desk .note{color:var(--muted);font-size:.9rem;margin:0 0 18px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .field label{font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+  .field input,.field select{border:1px solid var(--line);background:var(--cream);color:var(--bark);
+    border-radius:8px;padding:12px 14px;font-size:1rem;width:100%;}
+  .field input:focus,.field select:focus{outline:2px solid var(--marigold);outline-offset:1px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .send{display:block;width:100%;text-align:center;background:var(--leaf);color:#F5F2E4;
+    border:none;font:inherit;font-weight:700;border-radius:10px;padding:15px;font-size:1.02rem;cursor:pointer;}
+  .send:focus-visible{outline:3px solid var(--marigold);outline-offset:2px;}
+  .desk .after{font-size:.8rem;color:var(--muted);text-align:center;margin:10px 0 0;}
+
+  .eyebrow{color:var(--marigold-deep);text-transform:uppercase;letter-spacing:.16em;
+    font-size:.72rem;font-weight:700;margin:56px 0 8px;}
+  h2{font-family:Georgia,serif;font-weight:400;font-size:1.55rem;margin:0 0 8px;color:var(--bark);text-wrap:balance;}
+  .sub{color:var(--muted);margin:0 0 20px;max-width:36em;}
+
+  .rooms{display:flex;flex-direction:column;gap:16px;}
+  .room{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .room .photo{height:140px;display:flex;align-items:flex-end;padding:12px;}
+  .room .photo span{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.9);background:rgba(0,0,0,.35);padding:4px 9px;border-radius:20px;}
+  .room:nth-child(1) .photo{background:linear-gradient(135deg,#41682F,#8CA85F 60%,#E3D9A6);}
+  .room:nth-child(2) .photo{background:linear-gradient(135deg,#6B4F2A,#A98B54 55%,#E8D9AC);}
+  .room .body{padding:18px 20px;}
+  .room .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .room h3{margin:0;font-size:1.05rem;}
+  .room .rate{font-family:Georgia,serif;color:var(--leaf);font-size:1.15rem;white-space:nowrap;}
+  .room p{margin:6px 0 0;color:var(--muted);font-size:.9rem;}
+
+  .points{display:flex;flex-direction:column;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;padding:6px 20px;}
+  .points div{padding:13px 0;border-bottom:1px solid var(--line);font-size:.94rem;display:flex;gap:12px;}
+  .points div:last-child{border-bottom:none;}
+  .points .mark{color:var(--marigold-deep);font-weight:700;}
+
+  .foot{margin-top:48px;color:var(--muted);font-size:.8rem;text-align:center;}
+</style>
+
+<div class="demo-ribbon">DEMO PREVIEW built by <b>Diyama Solutions</b> for Tabonina Guest House. Photos, rates and text are placeholders, replaced with yours on approval.</div>
+
+<div class="hero">
+  <div class="inner">
+    <div class="place">Livingstone, Zambia &middot; LILOGHA member</div>
+    <h1>A guest house in a mango tree garden that takes bookings while you sleep.</h1>
+    <p>Guests from anywhere in the world can request a room right here, day or night. The request arrives in your WhatsApp, filled in and ready to confirm.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="desk">
+    <p class="eyebrow">Reserve your stay</p>
+    <h2>Request a room in 20 seconds</h2>
+    <p class="note">No account, no card. Your request goes straight to our front desk on WhatsApp.</p>
+    <div class="field">
+      <label for="gname">Your name</label>
+      <input id="gname" type="text" placeholder="e.g. Sarah M.">
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label for="checkin">Check in</label>
+        <input id="checkin" type="date">
+      </div>
+      <div class="field">
+        <label for="checkout">Check out</label>
+        <input id="checkout" type="date">
+      </div>
+    </div>
+    <div class="field">
+      <label for="roomtype">Room</label>
+      <select id="roomtype">
+        <option>Double Room, K450 per night</option>
+        <option>Twin Room, K500 per night</option>
+        <option>Any available room</option>
+      </select>
+    </div>
+    <button class="send" id="sendBtn" type="button">Send request on WhatsApp</button>
+    <p class="after">We reply within minutes during the day, first thing in the morning overnight.</p>
+  </div>
+
+  <p class="eyebrow">Rooms</p>
+  <h2>Simple, spotless, and quiet</h2>
+  <div class="rooms">
+    <div class="room">
+      <div class="photo"><span>Your photo here</span></div>
+      <div class="body">
+        <div class="head"><h3>Double Room</h3><span class="rate">K450 / night</span></div>
+        <p>Double bed, en suite bathroom, breakfast included, garden view.</p>
+      </div>
+    </div>
+    <div class="room">
+      <div class="photo"><span>Your photo here</span></div>
+      <div class="body">
+        <div class="head"><h3>Twin Room</h3><span class="rate">K500 / night</span></div>
+        <p>Two single beds, en suite bathroom, breakfast included.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="eyebrow">Good to know</p>
+  <h2>Why guests keep coming back</h2>
+  <div class="points">
+    <div><span class="mark">&#10003;</span> Two houses in Nottie Broad: Tabonina and Tabonina Bis, one booking desk for both</div>
+    <div><span class="mark">&#10003;</span> Victoria Falls nearby, transfers arranged at the desk</div>
+    <div><span class="mark">&#10003;</span> Outdoor pool, mango tree garden and home cooked breakfast</div>
+    <div><span class="mark">&#10003;</span> Air conditioned en suite rooms, secure parking and WiFi</div>
+  </div>
+
+  <div class="foot">Tabonina Guest House, Livingstone, Zambia. Demo page by Diyama Solutions.</div>
+</div>
+
+<script>
+  document.getElementById('sendBtn').addEventListener('click', function(){
+    var name = document.getElementById('gname').value || 'Guest';
+    var ci = document.getElementById('checkin').value || 'not set';
+    var co = document.getElementById('checkout').value || 'not set';
+    var room = document.getElementById('roomtype').value;
+    var msg = 'Hello Tabonina Guest House, I would like to book.\n'
+      + 'Name: ' + name + '\nCheck in: ' + ci + '\nCheck out: ' + co + '\nRoom: ' + room;
+    window.open('https://wa.me/260966138238?text=' + encodeURIComponent(msg), '_blank');
+  });
+</script>

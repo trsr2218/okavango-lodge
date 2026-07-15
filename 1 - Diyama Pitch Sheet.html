@@ -1,0 +1,262 @@
+<title>Diyama Digital Sprint: Livingstone</title>
+<style>
+  :root{
+    --paper:#FAF7F1; --surface:#FFFFFF; --ink:#17201B; --muted:#68716B;
+    --copper:#B4642E; --copper-deep:#8F4C1F; --green:#1E4D3B; --gold:#D9A441;
+    --line:#E4DDD0; --chip:#F1EADD;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#131A17; --surface:#1C2620; --ink:#EDE8DF; --muted:#9AA69E;
+      --copper:#D07E42; --copper-deep:#E3945A; --green:#7FB89E; --gold:#D9A441;
+      --line:#2C3830; --chip:#243029;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#131A17; --surface:#1C2620; --ink:#EDE8DF; --muted:#9AA69E;
+    --copper:#D07E42; --copper-deep:#E3945A; --green:#7FB89E; --gold:#D9A441;
+    --line:#2C3830; --chip:#243029;
+  }
+  :root[data-theme="light"]{
+    --paper:#FAF7F1; --surface:#FFFFFF; --ink:#17201B; --muted:#68716B;
+    --copper:#B4642E; --copper-deep:#8F4C1F; --green:#1E4D3B; --gold:#D9A441;
+    --line:#E4DDD0; --chip:#F1EADD;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height:1.55;font-size:16px;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px 64px;}
+  .topbar{display:flex;justify-content:space-between;align-items:baseline;
+    padding:18px 0;border-bottom:2px solid var(--ink);}
+  .brand{font-weight:800;letter-spacing:.14em;font-size:.85rem;}
+  .brand span{color:var(--copper);}
+  .topbar small{color:var(--muted);letter-spacing:.08em;font-size:.7rem;text-transform:uppercase;}
+  .eyebrow{color:var(--copper);text-transform:uppercase;letter-spacing:.16em;
+    font-size:.72rem;font-weight:700;margin:40px 0 10px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;
+    font-size:clamp(2rem,7vw,2.7rem);line-height:1.12;margin:0 0 14px;text-wrap:balance;}
+  h1 em{font-style:italic;color:var(--copper);}
+  .lede{color:var(--muted);font-size:1.05rem;margin:0 0 8px;max-width:34em;}
+  h2{font-family:Georgia,serif;font-weight:400;font-size:1.45rem;margin:0 0 6px;text-wrap:balance;}
+  .section{margin-top:52px;}
+  .sub{color:var(--muted);margin:0 0 20px;font-size:.95rem;}
+
+  /* calculator */
+  .calc{background:var(--green);color:#F4F1E8;border-radius:14px;padding:26px 22px;margin-top:14px;}
+  :root[data-theme="dark"] .calc, .calc{color:#F4F1E8;}
+  .calc .eyebrow{color:var(--gold);margin-top:0;}
+  .calc h2{color:inherit;}
+  .calc p{color:#C9D4C6;font-size:.92rem;margin:6px 0 18px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .field label{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#C9D4C6;}
+  .field input{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);
+    color:inherit;border-radius:8px;padding:12px 14px;font-size:1.05rem;width:100%;
+    font-variant-numeric:tabular-nums;}
+  .field input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  .calc-out{border-top:1px solid rgba(255,255,255,.22);margin-top:20px;padding-top:18px;
+    display:flex;flex-direction:column;gap:12px;}
+  .calc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .calc-row .label{font-size:.85rem;color:#C9D4C6;}
+  .calc-row .num{font-family:Georgia,serif;font-size:1.7rem;color:var(--gold);
+    font-variant-numeric:tabular-nums;}
+  .calc-row.year .num{font-size:2.3rem;color:#FFFFFF;}
+  .calc-note{font-size:.8rem;color:#AABBA6;margin-top:10px;}
+
+  /* offers */
+  .cards{display:flex;flex-direction:column;gap:14px;margin-top:18px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .card .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px;}
+  .card h3{margin:0;font-size:1.05rem;font-weight:700;}
+  .price{font-family:Georgia,serif;color:var(--copper);font-size:1.25rem;white-space:nowrap;
+    font-variant-numeric:tabular-nums;}
+  .card p{margin:0;color:var(--muted);font-size:.92rem;}
+  .card .hook{margin-top:10px;font-size:.85rem;color:var(--ink);
+    background:var(--chip);border-radius:8px;padding:8px 12px;display:inline-block;}
+  .bundle{border:2px solid var(--copper);position:relative;}
+  .bundle .tag{position:absolute;top:-11px;left:16px;background:var(--copper);color:#FFF7EE;
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    padding:3px 10px;border-radius:20px;}
+
+  /* audit findings */
+  .audit-card ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .audit-card li{color:var(--muted);font-size:.9rem;padding-left:1.3em;position:relative;}
+  .audit-card li::before{content:"\2717";position:absolute;left:0;color:var(--copper);font-weight:700;}
+  .audit-card .who{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--copper);margin-bottom:2px;}
+  .audit-close{margin-top:16px;font-size:.95rem;color:var(--ink);background:var(--chip);
+    border-radius:10px;padding:14px 16px;}
+
+  /* steps */
+  .steps{display:flex;flex-direction:column;gap:0;margin-top:18px;}
+  .step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
+  .step:last-child{border-bottom:none;}
+  .step .n{font-family:Georgia,serif;color:var(--copper);font-size:1.3rem;min-width:1.6em;}
+  .step h3{margin:0 0 2px;font-size:1rem;}
+  .step p{margin:0;color:var(--muted);font-size:.9rem;}
+
+  .scarcity{margin-top:44px;background:var(--chip);border-left:4px solid var(--gold);
+    border-radius:0 10px 10px 0;padding:16px 18px;font-size:.95rem;}
+  .scarcity strong{color:var(--copper-deep);}
+
+  .foot{margin-top:52px;border-top:2px solid var(--ink);padding-top:22px;}
+  .foot .row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;
+    border-bottom:1px dashed var(--line);font-size:.93rem;}
+  .foot .row span:first-child{color:var(--muted);text-transform:uppercase;
+    letter-spacing:.08em;font-size:.72rem;padding-top:3px;}
+  .cta{display:block;text-align:center;background:var(--copper);color:#FFF7EE;
+    text-decoration:none;font-weight:700;border-radius:10px;padding:16px;margin-top:22px;
+    font-size:1.05rem;letter-spacing:.02em;}
+  .cta:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .fineprint{color:var(--muted);font-size:.75rem;margin-top:14px;text-align:center;}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">DIYAMA <span>SOLUTIONS</span></div>
+    <small>Livingstone Digital Sprint</small>
+  </div>
+
+  <p class="eyebrow">Built in 24 hours. Priced for this week only.</p>
+  <h1>Every booking through an agent costs you <em>15%</em>. Keep it instead.</h1>
+  <p class="lede">We build lodges, guest houses and tour operators a direct booking presence in one day: your own page, WhatsApp bookings, and a Google profile guests actually find. You see the finished demo before you pay a single kwacha.</p>
+
+  <div class="section">
+    <div class="calc">
+      <p class="eyebrow">The commission calculator</p>
+      <h2>What are the agents taking from you?</h2>
+      <p>Enter two numbers from last month. This is what leaves your pocket.</p>
+      <div class="field">
+        <label for="nights">Room nights booked through Booking.com or agents per month</label>
+        <input id="nights" type="number" inputmode="numeric" value="40" min="0">
+      </div>
+      <div class="field">
+        <label for="rate">Average price per night (Kwacha)</label>
+        <input id="rate" type="number" inputmode="numeric" value="650" min="0">
+      </div>
+      <div class="calc-out">
+        <div class="calc-row">
+          <span class="label">Commission paid every month</span>
+          <span class="num" id="outMonth">K3,900</span>
+        </div>
+        <div class="calc-row year">
+          <span class="label">Gone every year</span>
+          <span class="num" id="outYear">K46,800</span>
+        </div>
+      </div>
+      <p class="calc-note">Based on the standard 15% online travel agency commission. Direct bookings through your own page and WhatsApp are commission free.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="eyebrow">We did the homework</p>
+    <h2>What we found on Livingstone websites this week</h2>
+    <p class="sub">Real checks, done in one afternoon. If we can find these gaps this fast, so can every guest comparing you to the lodge next door.</p>
+    <div class="cards">
+      <div class="card audit-card">
+        <div class="who">Okavango Lodge</div>
+        <h3>Website, but no way to book</h3>
+        <ul>
+          <li>Guests fill a contact form and wait, while booking sites confirm instantly</li>
+          <li>The same room shows two different prices on one page, $35 and $40</li>
+          <li>No payment methods and no email listed anywhere</li>
+        </ul>
+      </div>
+      <div class="card audit-card">
+        <div class="who">Tabonina Guesthouse</div>
+        <h3>Website run from another continent</h3>
+        <ul>
+          <li>Homepage shows no phone number, no email and no address</li>
+          <li>No prices anywhere on the site, so guests leave to compare elsewhere</li>
+          <li>Booking means writing to a Yahoo address and hoping for a reply</li>
+        </ul>
+      </div>
+      <div class="card audit-card">
+        <div class="who">Zinga Backpackers</div>
+        <h3>No website at all</h3>
+        <ul>
+          <li>Only visible on booking sites that charge commission on every bed</li>
+          <li>49 reviews while the market leader holds over 800</li>
+          <li>Guests searching the name directly find nothing to book</li>
+        </ul>
+      </div>
+    </div>
+    <div class="audit-close"><strong>Want to know what we found on yours?</strong> Ask. The check is free and takes us minutes.</div>
+  </div>
+
+  <div class="section">
+    <p class="eyebrow">The offers</p>
+    <h2>Pick one, or take the sprint bundle</h2>
+    <p class="sub">Every item is delivered within 24 hours of payment. You approve the demo first.</p>
+    <div class="cards">
+      <div class="card bundle">
+        <span class="tag">Best value</span>
+        <div class="head"><h3>Direct Booking Sprint</h3><span class="price">K3,500</span></div>
+        <p>Your own one page website with a WhatsApp booking button, plus Google Business Profile setup, plus a review card system for your front desk. Everything below, together, done in one day.</p>
+        <span class="hook">Separately K4,700. This week K3,500.</span>
+      </div>
+      <div class="card">
+        <div class="head"><h3>Direct booking page</h3><span class="price">K2,500</span></div>
+        <p>A fast, beautiful one page site for your lodge or tours. Guests tap once and their booking request lands in your WhatsApp with dates and room already filled in.</p>
+        <span class="hook">The demo is already built. Ask to see yours.</span>
+      </div>
+      <div class="card">
+        <div class="head"><h3>Google Business Profile</h3><span class="price">K1,000</span></div>
+        <p>Set up or fix your profile so "lodge near Victoria Falls" finds you: photos, correct pin, opening hours, WhatsApp link, and your first posts.</p>
+        <span class="hook">Done with you in 45 minutes, on your phone.</span>
+      </div>
+      <div class="card">
+        <div class="head"><h3>Review engine</h3><span class="price">K1,200</span></div>
+        <p>A printed QR card for checkout plus follow up message templates, so every happy guest becomes a 5 star review. Reviews are how travelers choose between you and the lodge next door.</p>
+        <span class="hook">More reviews, higher ranking, fuller rooms.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="eyebrow">How it works</p>
+    <h2>Three steps, one day</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div>
+        <h3>You see the demo first</h3>
+        <p>We show you a working preview built for your business. No payment yet.</p>
+      </div></div>
+      <div class="step"><span class="n">2</span><div>
+        <h3>You approve and pay</h3>
+        <p>Mobile money or cash. We collect your photos, prices and WhatsApp number on the spot.</p>
+      </div></div>
+      <div class="step"><span class="n">3</span><div>
+        <h3>Live within 24 hours</h3>
+        <p>Your page is online and taking booking requests before this time tomorrow.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="scarcity">
+    <strong>Sprint pricing ends this week.</strong> We are taking a maximum of 5 Livingstone businesses at these prices while we launch here. After that, standard rates apply and the queue is two weeks.
+  </div>
+
+  <div class="foot">
+    <div class="row"><span>Company</span><span>Diyama Solutions Ltd, Business Growth Partner</span></div>
+    <div class="row"><span>WhatsApp</span><span>+260 96 613 8238</span></div>
+    <div class="row"><span>Email</span><span>info@thezao.com</span></div>
+    <div class="row"><span>Payment</span><span>MTN / Airtel Money or cash on approval</span></div>
+    <a class="cta" href="https://wa.me/260966138238?text=Hi%20Diyama%2C%20I%20want%20to%20see%20the%20demo%20for%20my%20business">See your free demo on WhatsApp</a>
+    <p class="fineprint">Diyama Solutions Ltd. Prices in Zambian Kwacha. Demo first, payment after approval.</p>
+  </div>
+</div>
+
+<script>
+  const nights = document.getElementById('nights');
+  const rate = document.getElementById('rate');
+  const outMonth = document.getElementById('outMonth');
+  const outYear = document.getElementById('outYear');
+  function fmt(n){ return 'K' + Math.round(n).toLocaleString('en-US'); }
+  function calc(){
+    const m = (parseFloat(nights.value)||0) * (parseFloat(rate.value)||0) * 0.15;
+    outMonth.textContent = fmt(m);
+    outYear.textContent = fmt(m*12);
+  }
+  nights.addEventListener('input', calc);
+  rate.addEventListener('input', calc);
+  calc();
+</script>

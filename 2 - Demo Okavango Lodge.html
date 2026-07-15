@@ -1,0 +1,159 @@
+<title>Demo by Diyama: Okavango Lodge, Book Direct</title>
+<style>
+  :root{
+    --river:#0F3D46; --river-deep:#0A2A31; --sand:#F4EEE1; --paper:#FBF8F1;
+    --amber:#E08A3C; --amber-deep:#B96A22; --ink:#1F2A2C; --muted:#5E6E70; --line:#E3DACA;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;}
+  .demo-ribbon{background:#1F2A2C;color:#EFE7D6;font-size:.72rem;letter-spacing:.06em;
+    padding:8px 14px;text-align:center;}
+  .demo-ribbon b{color:#F0B67F;}
+
+  /* hero: dusk over the Zambezi in layered gradients */
+  .hero{position:relative;color:#FDF6E9;overflow:hidden;
+    background:
+      linear-gradient(180deg, #23404B 0%, #3E5A60 34%, #C97E45 58%, #E5A05A 66%, #0F3D46 66.5%, #0A2A31 100%);
+    padding:70px 24px 56px;}
+  .hero::after{content:"";position:absolute;left:0;right:0;top:66.5%;height:33.5%;
+    background:repeating-linear-gradient(180deg, rgba(240,182,127,.28) 0 2px, transparent 2px 9px);
+    opacity:.5;pointer-events:none;}
+  .hero .inner{position:relative;max-width:680px;margin:0 auto;z-index:1;}
+  .hero .place{text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:#F0C99A;margin-bottom:14px;}
+  .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;
+    font-size:clamp(2.1rem,7.5vw,3.1rem);line-height:1.1;margin:0 0 14px;text-wrap:balance;}
+  .hero p{max-width:32em;color:#EADFC8;margin:0 0 26px;font-size:1.02rem;}
+  .btn{display:inline-block;background:var(--amber);color:#231409;font-weight:700;
+    text-decoration:none;border-radius:10px;padding:15px 26px;font-size:1rem;}
+  .btn:focus-visible{outline:3px solid #FDF6E9;outline-offset:2px;}
+  .btn.ghost{background:transparent;color:#FDF6E9;border:1px solid rgba(253,246,233,.5);margin-left:10px;}
+
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px 70px;}
+  .eyebrow{color:var(--amber-deep);text-transform:uppercase;letter-spacing:.16em;
+    font-size:.72rem;font-weight:700;margin:56px 0 8px;}
+  h2{font-family:Georgia,serif;font-weight:400;font-size:1.6rem;margin:0 0 8px;text-wrap:balance;}
+  .sub{color:var(--muted);margin:0 0 22px;max-width:36em;}
+
+  /* direct price comparison */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+  .price-card{border-radius:12px;padding:20px;border:1px solid var(--line);background:#FFFFFF;}
+  .price-card.direct{background:var(--river);color:#F2EDE0;border-color:var(--river);}
+  .price-card .who{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);}
+  .price-card.direct .who{color:#A9C4C2;}
+  .price-card .amount{font-family:Georgia,serif;font-size:2rem;margin:6px 0 2px;
+    font-variant-numeric:tabular-nums;}
+  .price-card.direct .amount{color:#F0B67F;}
+  .price-card .per{font-size:.8rem;color:var(--muted);}
+  .price-card.direct .per{color:#A9C4C2;}
+  .price-card .perk{font-size:.83rem;margin-top:10px;}
+  .save-line{grid-column:1/-1;text-align:center;font-size:.9rem;color:var(--amber-deep);font-weight:600;}
+
+  /* rooms */
+  .rooms{display:flex;flex-direction:column;gap:16px;margin-top:20px;}
+  .room{background:#FFFFFF;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .room .photo{height:150px;display:flex;align-items:flex-end;padding:12px;}
+  .room .photo span{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.85);background:rgba(0,0,0,.35);padding:4px 9px;border-radius:20px;}
+  .room:nth-child(1) .photo{background:linear-gradient(135deg,#2E5A63,#7FA8A1 60%,#D8C9A5);}
+  .room:nth-child(2) .photo{background:linear-gradient(135deg,#54402C,#9A7B52 55%,#E0CCA2);}
+  .room:nth-child(3) .photo{background:linear-gradient(135deg,#1F3A34,#5C7F6B 55%,#C9D6B8);}
+  .room .body{padding:18px 20px 20px;}
+  .room .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .room h3{margin:0;font-size:1.05rem;}
+  .room .rate{font-family:Georgia,serif;color:var(--river);font-size:1.15rem;white-space:nowrap;}
+  .room p{margin:6px 0 14px;color:var(--muted);font-size:.9rem;}
+  .room a{color:var(--amber-deep);font-weight:700;text-decoration:none;font-size:.92rem;}
+
+  /* why direct */
+  .why{display:flex;flex-direction:column;gap:0;margin-top:14px;background:#FFFFFF;
+    border:1px solid var(--line);border-radius:12px;padding:6px 20px;}
+  .why div{padding:14px 0;border-bottom:1px solid var(--line);font-size:.94rem;display:flex;gap:12px;}
+  .why div:last-child{border-bottom:none;}
+  .why .mark{color:var(--amber-deep);font-weight:700;}
+
+  .strip{background:var(--river-deep);color:#EFE7D6;border-radius:14px;padding:26px 22px;
+    margin-top:56px;text-align:center;}
+  .strip h2{color:inherit;}
+  .strip p{color:#B9CCC6;font-size:.93rem;max-width:30em;margin:8px auto 20px;}
+  .foot{margin-top:40px;color:var(--muted);font-size:.8rem;text-align:center;}
+</style>
+
+<div class="demo-ribbon">DEMO PREVIEW built by <b>Diyama Solutions</b> for Okavango Lodge. Photos, rates and text are placeholders, replaced with yours on approval.</div>
+
+<div class="hero">
+  <div class="inner">
+    <div class="place">Livingstone, Zambia &middot; 10 minutes from Victoria Falls</div>
+    <h1>The Zambezi at your door. Your booking in one tap.</h1>
+    <p>Comfortable riverside rooms, warm Zambian hospitality, and the smoke that thunders just down the road. Book direct on WhatsApp and pay less than on any booking site.</p>
+    <a class="btn" href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20would%20like%20to%20book.%20Dates%3A%20__%20Guests%3A%20__">Book on WhatsApp</a>
+    <a class="btn ghost" href="#rooms">See rooms</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="eyebrow">Why book direct</p>
+  <h2>Same room. Better price. No middleman.</h2>
+  <p class="sub">Booking sites charge lodges commission on every stay. When you book with us directly, we share that saving with you.</p>
+  <div class="compare">
+    <div class="price-card">
+      <div class="who">On booking sites</div>
+      <div class="amount">$40</div>
+      <div class="per">per night, double or twin</div>
+      <div class="perk">Card only, no flexibility</div>
+    </div>
+    <div class="price-card direct">
+      <div class="who">Direct with us</div>
+      <div class="amount">$35</div>
+      <div class="per">per night, double or twin</div>
+      <div class="perk">Mobile money, card or cash. Free early check in when available.</div>
+    </div>
+    <div class="save-line">Same room, $5 less every night, booked in one tap. A 4 night stay puts $20 back in your pocket.</div>
+  </div>
+
+  <p class="eyebrow" id="rooms">Rooms</p>
+  <h2>Sleep to the sound of the river</h2>
+  <div class="rooms">
+    <div class="room">
+      <div class="photo"><span>Your photo here</span></div>
+      <div class="body">
+        <div class="head"><h3>Standard Double</h3><span class="rate">$35 / night</span></div>
+        <p>Double bed, en suite bathroom, air conditioning, TV and fridge. Breakfast included.</p>
+        <a href="https://wa.me/260966138238?text=Hello%2C%20I%20would%20like%20the%20Standard%20Double.%20Dates%3A%20__">Check availability &rsaquo;</a>
+      </div>
+    </div>
+    <div class="room">
+      <div class="photo"><span>Your photo here</span></div>
+      <div class="body">
+        <div class="head"><h3>Twin Room</h3><span class="rate">$40 / night</span></div>
+        <p>Two beds, en suite, air conditioning, TV and fridge. Ideal for friends and colleagues.</p>
+        <a href="https://wa.me/260966138238?text=Hello%2C%20I%20would%20like%20the%20Twin%20Room.%20Dates%3A%20__">Check availability &rsaquo;</a>
+      </div>
+    </div>
+    <div class="room">
+      <div class="photo"><span>Your photo here</span></div>
+      <div class="body">
+        <div class="head"><h3>Executive Room</h3><span class="rate">$55 / night</span></div>
+        <p>Separate living room plus kitchenette. Room to spread out and stay longer.</p>
+        <a href="https://wa.me/260966138238?text=Hello%2C%20I%20would%20like%20the%20Executive%20Room.%20Dates%3A%20__">Check availability &rsaquo;</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="eyebrow">The essentials</p>
+  <h2>Everything a Falls trip needs</h2>
+  <div class="why">
+    <div><span class="mark">&#10003;</span> Free airport and town pickup arranged on request</div>
+    <div><span class="mark">&#10003;</span> Victoria Falls entry, ferry and activity bookings at the desk</div>
+    <div><span class="mark">&#10003;</span> Mobile money, Visa and cash accepted</div>
+    <div><span class="mark">&#10003;</span> Secure parking, WiFi in common areas, laundry service</div>
+  </div>
+
+  <div class="strip">
+    <h2>Tonight is bookable right now</h2>
+    <p>Send your dates on WhatsApp and get a confirmation back in minutes, not days. No forms, no card required to reserve.</p>
+    <a class="btn" href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20would%20like%20to%20book.%20Dates%3A%20__%20Guests%3A%20__">Book on WhatsApp</a>
+  </div>
+
+  <div class="foot">Okavango Lodge, Livingstone, Zambia. Demo page by Diyama Solutions.</div>
+</div>

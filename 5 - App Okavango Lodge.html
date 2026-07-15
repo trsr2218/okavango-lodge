@@ -1,0 +1,454 @@
+<title>Okavango Lodge</title>
+<style>
+  :root{
+    --river:#0F3D46; --river-deep:#0A2A31; --paper:#FBF8F1; --sand:#F4EEE1;
+    --amber:#E08A3C; --amber-deep:#B96A22; --ink:#1F2A2C; --muted:#5E6E70;
+    --line:#E3DACA; --cream:#EFE7D6; --nav-h:64px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;}
+  body{background:var(--river-deep); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.55;}
+
+  .app{max-width:480px; margin:0 auto; min-height:100vh; min-height:100dvh;
+    background:var(--paper); position:relative;
+    box-shadow:0 0 40px rgba(0,0,0,.45);}
+
+  .ribbon{background:var(--ink); color:var(--cream); font-size:.66rem;
+    letter-spacing:.06em; padding:6px 12px; text-align:center;}
+  .ribbon b{color:#F0B67F; font-weight:700;}
+
+  /* screens */
+  .screen{display:none; padding-bottom:calc(var(--nav-h) + 28px);
+    animation:screenIn .18s ease-out;}
+  .screen.active{display:block;}
+  @keyframes screenIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion: reduce){
+    .screen{animation:none;}
+  }
+
+  /* shared type */
+  .eyebrow{color:var(--amber-deep); text-transform:uppercase; letter-spacing:.16em;
+    font-size:.68rem; font-weight:700; margin:34px 0 6px;}
+  h2{font-family:Georgia,"Times New Roman",serif; font-weight:400;
+    font-size:1.45rem; margin:0 0 6px; text-wrap:balance;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:.9rem; max-width:34em;}
+  .pad{padding:0 20px;}
+
+  /* HOME hero: dusk over the Zambezi */
+  .hero{position:relative; color:#FDF6E9; overflow:hidden;
+    background:
+      linear-gradient(180deg,#23404B 0%,#3E5A60 34%,#C97E45 58%,#E5A05A 66%,#0F3D46 66.5%,#0A2A31 100%);
+    padding:54px 20px 42px;}
+  .hero::after{content:""; position:absolute; left:0; right:0; top:66.5%; height:33.5%;
+    background:repeating-linear-gradient(180deg, rgba(240,182,127,.28) 0 2px, transparent 2px 9px);
+    opacity:.5; pointer-events:none;}
+  .hero .inner{position:relative; z-index:1;}
+  .hero .place{text-transform:uppercase; letter-spacing:.22em; font-size:.66rem;
+    color:#F0C99A; margin-bottom:12px;}
+  .hero h1{font-family:Georgia,"Times New Roman",serif; font-weight:400;
+    font-size:clamp(1.9rem,8vw,2.5rem); line-height:1.12; margin:0 0 12px; text-wrap:balance;}
+  .hero p{color:#EADFC8; margin:0 0 22px; font-size:.95rem; max-width:30em;}
+
+  .btn{display:inline-block; background:var(--amber); color:#231409; font-weight:700;
+    text-decoration:none; border:none; border-radius:10px; padding:14px 24px;
+    font-size:.98rem; font-family:inherit; cursor:pointer;}
+  .btn:focus-visible{outline:3px solid #FDF6E9; outline-offset:2px;}
+  .btn.full{display:block; width:100%; text-align:center;}
+  .btn.quiet{background:transparent; color:var(--amber-deep);
+    border:1px solid var(--amber-deep); font-weight:700;}
+  .btn.quiet:focus-visible{outline:3px solid var(--amber-deep);}
+
+  /* price compare */
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+  .price-card{border-radius:12px; padding:16px; border:1px solid var(--line); background:#FFFFFF;}
+  .price-card.direct{background:var(--river); color:#F2EDE0; border-color:var(--river);}
+  .price-card .who{font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);}
+  .price-card.direct .who{color:#A9C4C2;}
+  .price-card .amount{font-family:Georgia,serif; font-size:1.8rem; margin:5px 0 2px;
+    font-variant-numeric:tabular-nums;}
+  .price-card.direct .amount{color:#F0B67F;}
+  .price-card .per{font-size:.75rem; color:var(--muted);}
+  .price-card.direct .per{color:#A9C4C2;}
+  .save-line{grid-column:1/-1; text-align:center; font-size:.85rem;
+    color:var(--amber-deep); font-weight:600;}
+
+  .why{background:#FFFFFF; border:1px solid var(--line); border-radius:12px;
+    padding:4px 18px; margin-top:12px;}
+  .why div{padding:12px 0; border-bottom:1px solid var(--line);
+    font-size:.88rem; display:flex; gap:11px;}
+  .why div:last-child{border-bottom:none;}
+  .why .mark{color:var(--amber-deep); font-weight:700;}
+
+  /* screen headers (non-home) */
+  .screen-head{background:var(--river); color:#F2EDE0; padding:44px 20px 24px;}
+  .screen-head .place{text-transform:uppercase; letter-spacing:.2em; font-size:.62rem;
+    color:#A9C4C2; margin-bottom:8px;}
+  .screen-head h1{font-family:Georgia,serif; font-weight:400; font-size:1.7rem;
+    margin:0; line-height:1.15; text-wrap:balance;}
+  .screen-head p{color:#B9CCC6; font-size:.88rem; margin:8px 0 0; max-width:32em;}
+
+  /* rooms */
+  .rooms{display:flex; flex-direction:column; gap:14px; margin-top:18px;}
+  .room{background:#FFFFFF; border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .room .photo{height:130px; display:flex; align-items:flex-end; padding:11px;}
+  .room .photo span{font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+    color:rgba(255,255,255,.85); background:rgba(0,0,0,.35); padding:4px 9px; border-radius:20px;}
+  .room[data-photo="1"] .photo{background:linear-gradient(135deg,#2E5A63,#7FA8A1 60%,#D8C9A5);}
+  .room[data-photo="2"] .photo{background:linear-gradient(135deg,#54402C,#9A7B52 55%,#E0CCA2);}
+  .room[data-photo="3"] .photo{background:linear-gradient(135deg,#1F3A34,#5C7F6B 55%,#C9D6B8);}
+  .room .body{padding:15px 18px 18px;}
+  .room .head{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .room h3{margin:0; font-size:1rem;}
+  .room .rate{font-family:Georgia,serif; color:var(--river); font-size:1.1rem;
+    white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .room p{margin:5px 0 13px; color:var(--muted); font-size:.86rem;}
+  .room button{font:inherit;}
+
+  /* explore */
+  .acts{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+  .act{background:#FFFFFF; border:1px solid var(--line); border-radius:12px; padding:15px 18px;}
+  .act .head{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .act h3{margin:0; font-size:.98rem;}
+  .act .from{color:var(--river); font-family:Georgia,serif; font-size:.95rem;
+    white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .act p{margin:5px 0 10px; color:var(--muted); font-size:.85rem;}
+  .act a{color:var(--amber-deep); font-weight:700; text-decoration:none; font-size:.88rem;}
+  .act a:focus-visible{outline:3px solid var(--amber-deep); outline-offset:2px;}
+
+  /* book form */
+  .form{margin-top:18px; display:flex; flex-direction:column; gap:14px;}
+  .field label{display:block; font-size:.72rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.1em; color:var(--muted); margin-bottom:6px;}
+  .field select, .field input[type="date"], .field input[type="text"]{
+    width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:10px;
+    background:#FFFFFF; font:inherit; font-size:.95rem; color:var(--ink);}
+  .field select:focus-visible, .field input:focus-visible{
+    outline:3px solid var(--amber); outline-offset:1px;}
+  .steppers{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .stepper{display:flex; align-items:center; gap:0; border:1px solid var(--line);
+    border-radius:10px; background:#FFFFFF; overflow:hidden;}
+  .stepper button{width:46px; height:48px; border:none; background:var(--sand);
+    font-size:1.25rem; color:var(--river); cursor:pointer; font-family:inherit;}
+  .stepper button:focus-visible{outline:3px solid var(--amber); outline-offset:-3px;}
+  .stepper output{flex:1; text-align:center; font-size:1rem; font-weight:700;
+    font-variant-numeric:tabular-nums;}
+
+  .quote{background:var(--river); color:#F2EDE0; border-radius:14px;
+    padding:20px; margin-top:20px;}
+  .quote .row{display:flex; justify-content:space-between; font-size:.9rem;
+    padding:5px 0; color:#B9CCC6; font-variant-numeric:tabular-nums;}
+  .quote .row.total{color:#F2EDE0; font-weight:700; font-size:1.05rem;
+    border-top:1px solid rgba(255,255,255,.18); margin-top:8px; padding-top:12px;}
+  .quote .row.total .num{font-family:Georgia,serif; font-size:1.35rem; color:#F0B67F;}
+  .quote .save{margin:12px 0 0; font-size:.83rem; color:#F0C99A; text-align:center;}
+  .book-cta{margin-top:16px;}
+  .book-note{font-size:.78rem; color:var(--muted); text-align:center; margin-top:10px;}
+
+  .contact{background:#FFFFFF; border:1px solid var(--line); border-radius:12px;
+    padding:4px 18px; margin-top:12px;}
+  .contact div{padding:12px 0; border-bottom:1px solid var(--line); font-size:.88rem;
+    display:flex; gap:11px;}
+  .contact div:last-child{border-bottom:none;}
+  .contact .k{color:var(--muted); min-width:82px; font-size:.72rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:.08em; padding-top:2px;}
+
+  .foot{margin-top:36px; color:var(--muted); font-size:.74rem; text-align:center;
+    padding:0 20px;}
+
+  /* bottom tab bar */
+  .tabbar{position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px; height:var(--nav-h);
+    background:var(--river-deep); display:flex; z-index:10;
+    padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -6px 18px rgba(10,42,49,.25);}
+  .tab{flex:1; border:none; background:none; color:#7E9A99; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:3px; font-family:inherit; font-size:.62rem; letter-spacing:.05em;
+    text-transform:uppercase; font-weight:700;}
+  .tab svg{width:22px; height:22px; stroke:currentColor; fill:none;
+    stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+  .tab.active{color:#F0B67F;}
+  .tab:focus-visible{outline:3px solid #F0B67F; outline-offset:-3px;}
+</style>
+
+<div class="app">
+  <div class="ribbon">DEMO PREVIEW built by <b>Diyama Solutions</b> for Okavango Lodge. Placeholder photos and rates.</div>
+
+  <!-- HOME -->
+  <section class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="inner">
+        <div class="place">Livingstone, Zambia &middot; 10 minutes from Victoria Falls</div>
+        <h1>The Zambezi at your door. Your booking in one tap.</h1>
+        <p>Comfortable riverside rooms, warm Zambian hospitality, and the smoke that thunders just down the road.</p>
+        <button class="btn" data-goto="book">Book your stay</button>
+      </div>
+    </div>
+    <div class="pad">
+      <p class="eyebrow">Why book direct</p>
+      <h2>Same room. Better price. No middleman.</h2>
+      <p class="sub">Booking sites charge lodges commission on every stay. When you book with us directly, we share that saving with you.</p>
+      <div class="compare">
+        <div class="price-card">
+          <div class="who">On booking sites</div>
+          <div class="amount">$40</div>
+          <div class="per">per night, double</div>
+        </div>
+        <div class="price-card direct">
+          <div class="who">Direct with us</div>
+          <div class="amount">$35</div>
+          <div class="per">per night, double</div>
+        </div>
+        <div class="save-line">A 4 night stay puts $20 back in your pocket.</div>
+      </div>
+
+      <p class="eyebrow">The essentials</p>
+      <h2>Everything a Falls trip needs</h2>
+      <div class="why">
+        <div><span class="mark">&#10003;</span> Free airport and town pickup arranged on request</div>
+        <div><span class="mark">&#10003;</span> Falls entry, ferry and activity bookings at the desk</div>
+        <div><span class="mark">&#10003;</span> Mobile money, Visa and cash accepted</div>
+        <div><span class="mark">&#10003;</span> Secure parking, WiFi in common areas, laundry service</div>
+      </div>
+      <div class="foot">Okavango Lodge, Livingstone, Zambia. Demo app by Diyama Solutions.</div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="screen" id="screen-rooms">
+    <div class="screen-head">
+      <div class="place">Rooms</div>
+      <h1>Sleep to the sound of the river</h1>
+      <p>Every room includes breakfast, air conditioning and en suite bathroom.</p>
+    </div>
+    <div class="pad">
+      <div class="rooms">
+        <div class="room" data-photo="1">
+          <div class="photo"><span>Your photo here</span></div>
+          <div class="body">
+            <div class="head"><h3>Standard Double</h3><span class="rate">$35 / night</span></div>
+            <p>Double bed, en suite bathroom, air conditioning, TV and fridge. Breakfast included.</p>
+            <button class="btn quiet full" data-goto="book" data-room="double">Book this room</button>
+          </div>
+        </div>
+        <div class="room" data-photo="2">
+          <div class="photo"><span>Your photo here</span></div>
+          <div class="body">
+            <div class="head"><h3>Twin Room</h3><span class="rate">$40 / night</span></div>
+            <p>Two beds, en suite, air conditioning, TV and fridge. Ideal for friends and colleagues.</p>
+            <button class="btn quiet full" data-goto="book" data-room="twin">Book this room</button>
+          </div>
+        </div>
+        <div class="room" data-photo="3">
+          <div class="photo"><span>Your photo here</span></div>
+          <div class="body">
+            <div class="head"><h3>Executive Room</h3><span class="rate">$55 / night</span></div>
+            <p>Separate living room plus kitchenette. Room to spread out and stay longer.</p>
+            <button class="btn quiet full" data-goto="book" data-room="executive">Book this room</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORE -->
+  <section class="screen" id="screen-explore">
+    <div class="screen-head">
+      <div class="place">Explore Livingstone</div>
+      <h1>The Falls and beyond, booked at our desk</h1>
+      <p>Tell us what you want to do and we arrange tickets, transport and guides.</p>
+    </div>
+    <div class="pad">
+      <div class="acts">
+        <div class="act">
+          <div class="head"><h3>Victoria Falls guided walk</h3><span class="from">from $20</span></div>
+          <p>Entry to Mosi-oa-Tunya, the smoke that thunders, with a local guide who knows every viewpoint.</p>
+          <a href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20Victoria%20Falls%20guided%20walk.">Ask on WhatsApp &rsaquo;</a>
+        </div>
+        <div class="act">
+          <div class="head"><h3>Zambezi sunset cruise</h3><span class="from">from $55</span></div>
+          <p>Two hours on the river with drinks and snacks as hippos surface and the sky turns amber.</p>
+          <a href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20Zambezi%20sunset%20cruise.">Ask on WhatsApp &rsaquo;</a>
+        </div>
+        <div class="act">
+          <div class="head"><h3>Microlight flight over the Falls</h3><span class="from">from $190</span></div>
+          <p>Fifteen minutes above the gorge. The photo everyone asks about when you get home.</p>
+          <a href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20microlight%20flight.">Ask on WhatsApp &rsaquo;</a>
+        </div>
+        <div class="act">
+          <div class="head"><h3>Devil's Pool, Livingstone Island</h3><span class="from">seasonal</span></div>
+          <p>Swim to the lip of the Falls when the water is low, usually August to December.</p>
+          <a href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20Devil%27s%20Pool.">Ask on WhatsApp &rsaquo;</a>
+        </div>
+        <div class="act">
+          <div class="head"><h3>Rhino walk, Mosi-oa-Tunya park</h3><span class="from">from $80</span></div>
+          <p>Track white rhino on foot with armed rangers in the national park next door.</p>
+          <a href="https://wa.me/260966138238?text=Hello%20Okavango%20Lodge%2C%20I%20am%20interested%20in%20the%20rhino%20walk.">Ask on WhatsApp &rsaquo;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section class="screen" id="screen-book">
+    <div class="screen-head">
+      <div class="place">Book direct</div>
+      <h1>Send your dates, get confirmed in minutes</h1>
+      <p>No forms to fill on a website, no card needed to reserve. Your request opens in WhatsApp, ready to send.</p>
+    </div>
+    <div class="pad">
+      <div class="form">
+        <div class="field">
+          <label for="f-room">Room</label>
+          <select id="f-room">
+            <option value="double">Standard Double, $35 per night</option>
+            <option value="twin">Twin Room, $40 per night</option>
+            <option value="executive">Executive Room, $55 per night</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-date">Check in date</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="steppers">
+          <div class="field">
+            <label id="l-nights">Nights</label>
+            <div class="stepper">
+              <button type="button" data-step="nights" data-dir="-1" aria-label="One night fewer">&minus;</button>
+              <output id="v-nights" aria-labelledby="l-nights">2</output>
+              <button type="button" data-step="nights" data-dir="1" aria-label="One night more">+</button>
+            </div>
+          </div>
+          <div class="field">
+            <label id="l-guests">Guests</label>
+            <div class="stepper">
+              <button type="button" data-step="guests" data-dir="-1" aria-label="One guest fewer">&minus;</button>
+              <output id="v-guests" aria-labelledby="l-guests">2</output>
+              <button type="button" data-step="guests" data-dir="1" aria-label="One guest more">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" placeholder="So we know who to welcome" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="quote" aria-live="polite">
+        <div class="row"><span id="q-line">Standard Double, 2 nights</span><span class="num" id="q-nightly">$35 x 2</span></div>
+        <div class="row total"><span>Your direct price</span><span class="num" id="q-total">$70</span></div>
+        <p class="save" id="q-save">That is $10 less than booking sites charge for the same stay.</p>
+      </div>
+
+      <div class="book-cta">
+        <a class="btn full" id="send-btn" href="https://wa.me/260966138238">Send booking on WhatsApp</a>
+        <p class="book-note">Opens WhatsApp with your request written for you. Nothing is charged.</p>
+      </div>
+
+      <p class="eyebrow">Find us</p>
+      <h2>Okavango Lodge</h2>
+      <div class="contact">
+        <div><span class="k">WhatsApp</span> <span>+260 96 613 8238</span></div>
+        <div><span class="k">Location</span> <span>Livingstone, Zambia, 10 minutes from Victoria Falls</span></div>
+        <div><span class="k">Payment</span> <span>Mobile money, Visa and cash</span></div>
+        <div><span class="k">Check in</span> <span>From 12:00, free early check in when available</span></div>
+      </div>
+      <div class="foot">Okavango Lodge, Livingstone, Zambia. Demo app by Diyama Solutions.</div>
+    </div>
+  </section>
+
+  <nav class="tabbar" aria-label="App sections">
+    <button class="tab active" data-tab="home" aria-current="page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9h13v-9"/></svg>
+      Home
+    </button>
+    <button class="tab" data-tab="rooms">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-7h18v7M3 18v1.5M21 18v1.5M3 11V6.5M6.5 11V8.5h5V11"/></svg>
+      Rooms
+    </button>
+    <button class="tab" data-tab="explore">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 5-4.8 2 2.2-5z"/></svg>
+      Explore
+    </button>
+    <button class="tab" data-tab="book">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.2L4 21l1.8-5.4A8 8 0 1 1 21 12z"/></svg>
+      Book
+    </button>
+  </nav>
+</div>
+
+<script>
+(function(){
+  var ROOMS = {
+    double:   { name: "Standard Double", rate: 35, site: 40 },
+    twin:     { name: "Twin Room",       rate: 40, site: 46 },
+    executive:{ name: "Executive Room",  rate: 55, site: 62 }
+  };
+  var state = { nights: 2, guests: 2 };
+
+  var tabs = document.querySelectorAll(".tab");
+  var screens = document.querySelectorAll(".screen");
+
+  function goTo(name){
+    screens.forEach(function(s){ s.classList.toggle("active", s.id === "screen-" + name); });
+    tabs.forEach(function(t){
+      var on = t.dataset.tab === name;
+      t.classList.toggle("active", on);
+      if (on) { t.setAttribute("aria-current", "page"); } else { t.removeAttribute("aria-current"); }
+    });
+    window.scrollTo(0, 0);
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){ goTo(t.dataset.tab); });
+  });
+
+  document.querySelectorAll("[data-goto]").forEach(function(el){
+    el.addEventListener("click", function(){
+      if (el.dataset.room) { document.getElementById("f-room").value = el.dataset.room; update(); }
+      goTo(el.dataset.goto);
+    });
+  });
+
+  document.querySelectorAll("[data-step]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var key = btn.dataset.step;
+      var next = state[key] + Number(btn.dataset.dir);
+      var max = key === "nights" ? 30 : 6;
+      state[key] = Math.min(max, Math.max(1, next));
+      update();
+    });
+  });
+
+  document.getElementById("f-room").addEventListener("change", update);
+  document.getElementById("f-date").addEventListener("change", update);
+  document.getElementById("f-name").addEventListener("input", update);
+
+  function update(){
+    var room = ROOMS[document.getElementById("f-room").value];
+    var n = state.nights, g = state.guests;
+    var total = room.rate * n;
+    var saving = (room.site - room.rate) * n;
+
+    document.getElementById("v-nights").textContent = n;
+    document.getElementById("v-guests").textContent = g;
+    document.getElementById("q-line").textContent =
+      room.name + ", " + n + (n === 1 ? " night" : " nights");
+    document.getElementById("q-nightly").textContent = "$" + room.rate + " x " + n;
+    document.getElementById("q-total").textContent = "$" + total;
+    document.getElementById("q-save").textContent =
+      "That is $" + saving + " less than booking sites charge for the same stay.";
+
+    var date = document.getElementById("f-date").value || "__";
+    var name = document.getElementById("f-name").value.trim();
+    var msg = "Hello Okavango Lodge, I would like to book the " + room.name +
+      ". Check in: " + date + ". Nights: " + n + ". Guests: " + g + "." +
+      (name ? " Name: " + name + "." : "");
+    document.getElementById("send-btn").href =
+      "https://wa.me/260966138238?text=" + encodeURIComponent(msg);
+  }
+
+  update();
+})();
+</script>
