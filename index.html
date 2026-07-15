@@ -1,4 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Okavango Lodge</title>
+<meta name="description" content="Book direct with Okavango Lodge, Livingstone, Zambia. Riverside rooms 10 minutes from Victoria Falls.">
+<meta name="theme-color" content="#0A2A31">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Okavango">
 <style>
   :root{
     --river:#0F3D46; --river-deep:#0A2A31; --paper:#FBF8F1; --sand:#F4EEE1;
@@ -17,6 +31,12 @@
   .ribbon{background:var(--ink); color:var(--cream); font-size:.66rem;
     letter-spacing:.06em; padding:6px 12px; text-align:center;}
   .ribbon b{color:#F0B67F; font-weight:700;}
+
+  .install{display:flex; align-items:center; gap:12px; background:var(--river);
+    color:#F2EDE0; padding:12px 16px; font-size:.85rem;}
+  .install[hidden]{display:none;}
+  .install .txt{flex:1;}
+  .install .btn{padding:9px 18px; font-size:.85rem; border-radius:8px;}
 
   /* screens */
   .screen{display:none; padding-bottom:calc(var(--nav-h) + 28px);
@@ -171,9 +191,15 @@
   .tab.active{color:#F0B67F;}
   .tab:focus-visible{outline:3px solid #F0B67F; outline-offset:-3px;}
 </style>
-
+</head>
+<body>
 <div class="app">
   <div class="ribbon">DEMO PREVIEW built by <b>Diyama Solutions</b> for Okavango Lodge. Placeholder photos and rates.</div>
+
+  <div class="install" id="install-strip" hidden>
+    <span class="txt" id="install-txt">Get the Okavango Lodge app on your phone.</span>
+    <button class="btn" id="install-btn">Install</button>
+  </div>
 
   <!-- HOME -->
   <section class="screen active" id="screen-home">
@@ -450,5 +476,42 @@
   }
 
   update();
+
+  /* PWA: install button + service worker */
+  var strip = document.getElementById("install-strip");
+  var installBtn = document.getElementById("install-btn");
+  var installTxt = document.getElementById("install-txt");
+  var deferred = null;
+  var standalone = window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault();
+    deferred = e;
+    if (!standalone) { strip.hidden = false; }
+  });
+
+  installBtn.addEventListener("click", function(){
+    if (!deferred) { return; }
+    deferred.prompt();
+    deferred.userChoice.then(function(){ deferred = null; });
+  });
+
+  window.addEventListener("appinstalled", function(){
+    strip.hidden = true;
+  });
+
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS && !standalone) {
+    installBtn.hidden = true;
+    installTxt.textContent = "Get the app: tap Share, then Add to Home Screen.";
+    strip.hidden = false;
+  }
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
 })();
 </script>
+</body>
+</html>
