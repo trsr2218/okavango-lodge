@@ -11,7 +11,8 @@ Open these on your phone (private artifacts on your Claude account):
 4. **Demo: Zinga Backpackers** (reviews wall, social proof)
    https://claude.ai/code/artifact/023fb6cd-b630-4ad5-bf93-400c8c9d652a
 5. **App: Okavango Lodge** (mobile app demo: Home / Rooms / Explore / Book tabs, live price quote, prefilled WhatsApp booking)
-   Installable PWA (use this one): https://trsr2218.github.io/okavango-lodge/
+   Installable PWA (use this one): https://okavango-lodge.vercel.app/
+   Backup mirror (GitHub Pages): https://trsr2218.github.io/okavango-lodge/
    Artifact preview: https://claude.ai/code/artifact/9742fadd-1df0-4479-9be0-ffe1228ed05a
    The PWA shows an Install button on Android/desktop Chrome and Add to Home Screen instructions on iPhone. Works offline after first load.
 
